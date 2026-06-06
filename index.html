@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-theme');
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.remove('light-theme');
+            document.documentElement.classList.add('dark');
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas</title>
+    <title>DONDE OMAR PARRILLAS | Asados al Carbón y Comidas Rápidas</title>
     <meta name="description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp. ¡Sabor auténtico preparado al momento!">
     <meta name="keywords" content="comida rapida, asados al carbon, omar parrilla, perros calientes, picadas, degranados, asados, pizzas, domicilio">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas">
+    <meta property="og:title" content="DONDE OMAR PARRILLAS | Asados al Carbón y Comidas Rápidas">
     <meta property="og:description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=84">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas">
+    <meta name="twitter:title" content="DONDE OMAR PARRILLAS | Asados al Carbón y Comidas Rápidas">
     <meta name="twitter:description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=84">
 
@@ -29,7 +38,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/transitions.css">
 </head>
 <body class="antialiased">
 
@@ -37,7 +47,7 @@
     <header class="navbar-header">
         <nav class="navbar section-shell">
             <a href="#inicio" class="navbar-logo" id="nav-logo-link">
-                <img src="logo.png" alt="DONDE OMAR PARRILLA" class="logo-img">
+                <img src="assets/logo.png" alt="DONDE OMAR PARRILLAS" class="logo-img">
             </a>
 
             <!-- Desktop Menu Links -->
@@ -51,12 +61,16 @@
 
             <!-- Header Action Buttons -->
             <div class="navbar-actions">
-                <a href="https://wa.me/573105556677" class="btn btn-secondary nav-wa-btn" target="_blank" rel="noreferrer">
+                <a href="https://wa.me/573235073766" class="btn btn-secondary nav-wa-btn" target="_blank" rel="noreferrer">
                     WhatsApp
                 </a>
                 <a href="carta.html" class="btn btn-primary">
                     Pedir Online
                 </a>
+                <!-- Theme Toggle Button -->
+                <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Cambiar tema">
+                    <i data-lucide="moon" id="theme-toggle-icon"></i>
+                </button>
                 <!-- Mobile Cart Toggle Button (Redirige a la carta si no está en ella) -->
                 <a href="carta.html" class="mobile-cart-toggle" id="open-cart-btn" aria-label="Ver Carrito">
                     <i data-lucide="shopping-cart"></i>
@@ -100,7 +114,7 @@
                         Auténtico Sabor al Carbón de Barrio
                     </p>
                     <h1 class="hero-title">
-                        DONDE OMAR <span class="highlight">PARRILLA</span>
+                        DONDE OMAR <span class="highlight">PARRILLAS</span>
                     </h1>
                     <p class="hero-subtitle">
                         Los mejores asados al carbón, picadas, hamburguesas, suizos y perros calientes. ¡Directo de la parrilla a tu mesa!
@@ -196,7 +210,7 @@
                 <div class="menu-viewer-container scroll-reveal">
                     <div class="menu-viewer-frame">
                         <div class="menu-drag-scroll" id="menu-drag-scroll">
-                            <img src="menu-page-1.jpg" alt="Carta página 1" class="menu-viewer-image" id="physical-menu-img">
+                            <img src="assets/menu-page-1.jpg" alt="Carta página 1" class="menu-viewer-image" id="physical-menu-img">
                         </div>
                     </div>
                     
@@ -210,7 +224,7 @@
                         <button type="button" class="btn btn-primary" id="open-fullscreen-btn">
                             <i data-lucide="maximize-2" class="icon-inline"></i> Ver Carta Completa
                         </button>
-                        <a href="menu.pdf" class="btn btn-outline" download="MENU_OH_DONDE_OMAR_PARRILLA.pdf">
+                        <a href="assets/menu.pdf" class="btn btn-outline" download="MENU_DONDE_OMAR_PARRILLAS.pdf">
                             <i data-lucide="download" class="icon-inline"></i> Descargar Menú PDF (4.2 MB)
                         </a>
                     </div>
@@ -308,7 +322,7 @@
                     <!-- Map Frame -->
                     <div class="map-container">
                         <iframe
-                          src="https://maps.google.com/maps?q=Av.%20Principal%20%2345-12,%20Bogota&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                          src="https://maps.google.com/maps?q=8.729329,-75.873072&t=&z=16&ie=UTF8&iwloc=&output=embed"
                           width="100%"
                           height="280"
                           style="border: 0;"
@@ -321,11 +335,14 @@
                     </div>
 
                     <div class="contact-direct-actions">
-                        <a href="https://wa.me/573105556677" class="btn btn-primary nav-wa-btn" target="_blank" rel="noreferrer">
+                        <a href="https://wa.me/573235073766" class="btn btn-primary nav-wa-btn" target="_blank" rel="noreferrer">
                             WhatsApp Principal
                         </a>
-                        <a href="tel:+573105556677" class="btn btn-outline" id="call-direct-btn">
+                        <a href="tel:+573235073766" class="btn btn-outline" id="call-direct-btn">
                             <i data-lucide="phone" class="icon-inline"></i> Llamar al Negocio
+                        </a>
+                        <a href="https://maps.app.goo.gl/okCTuvPJJjMqv1VQ8" class="btn btn-outline" target="_blank" rel="noreferrer">
+                            <i data-lucide="map-pin" class="icon-inline"></i> Ver en Google Maps
                         </a>
                     </div>
                 </div>
@@ -342,7 +359,7 @@
                             
                             <label class="form-label" for="contact-phone">
                                 <span>Número celular (WhatsApp) <span class="required-star">*</span></span>
-                                <input type="tel" id="contact-phone" name="phone" placeholder="Ej. 310 555 6677" required>
+                                <input type="tel" id="contact-phone" name="phone" placeholder="Ej. 323 507 3766" required>
                             </label>
                             
                             <label class="form-label" for="contact-message">
@@ -368,7 +385,7 @@
     <footer class="main-footer">
         <div class="section-shell footer-grid">
             <div class="footer-brand">
-                <h2 class="footer-title">OH DONDE OMAR PARRILLA</h2>
+                <h2 class="footer-title">DONDE OMAR PARRILLAS</h2>
                 <p class="footer-slogan">Asados al Carbón y Comidas Rápidas.</p>
             </div>
             
@@ -392,12 +409,12 @@
         </div>
         
         <div class="section-shell footer-copyright">
-            <p>Copyright <span id="footer-year">2026</span> OH DONDE OMAR PARRILLA. Todos los derechos reservados.</p>
+            <p>Copyright <span id="footer-year">2026</span> DONDE OMAR PARRILLAS. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/573105556677" class="floating-wa-btn nav-wa-btn" aria-label="WhatsApp" target="_blank" rel="noreferrer">
+    <a href="https://wa.me/573235073766" class="floating-wa-btn nav-wa-btn" aria-label="WhatsApp" target="_blank" rel="noreferrer">
         <!-- WhatsApp Official SVG Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
             <path fill="#fff" d="M4.9 43.3l2.7-9.9C5.9 30.6 5 27.4 5 24 5 13.5 13.5 5 24 5s19 8.5 19 19-8.5 19-19 19c-3.2 0-6.2-.8-8.8-2.3L4.9 43.3z"/>
@@ -416,7 +433,14 @@
     <!-- FULLSCREEN PHYSICAL MENU MODAL -->
     <div class="fullscreen-menu-modal" id="fullscreen-menu-modal" aria-hidden="true" role="dialog">
         <header class="fullscreen-modal-header">
-            <button type="button" class="btn btn-primary close-modal-btn" id="close-fullscreen-btn"><i data-lucide="x" class="icon-inline"></i> Cerrar Carta</button>
+            <button type="button" class="btn btn-primary close-modal-btn" id="close-fullscreen-btn"><i data-lucide="x" class="icon-inline"></i> <span>Cerrar Carta</span></button>
+            
+            <div class="zoom-controls-wrapper">
+                <button type="button" class="btn btn-outline zoom-btn" id="modal-zoom-out-btn" aria-label="Alejar"><i data-lucide="zoom-out" class="icon-inline"></i></button>
+                <span class="zoom-level-indicator" id="modal-zoom-indicator">100%</span>
+                <button type="button" class="btn btn-outline zoom-btn" id="modal-zoom-in-btn" aria-label="Acercar"><i data-lucide="zoom-in" class="icon-inline"></i></button>
+            </div>
+
             <button type="button" class="btn btn-outline rotate-modal-btn" id="rotate-fullscreen-btn"><i data-lucide="rotate-cw" class="icon-inline"></i> <span>Girar Carta</span></button>
         </header>
  
@@ -425,7 +449,7 @@
             <button type="button" class="modal-nav-arrow left" id="modal-prev-btn" aria-label="Página anterior"><i data-lucide="chevron-left"></i></button>
             
             <div class="fullscreen-modal-image-container">
-                <img src="menu-page-1.jpg" alt="Carta página completa" class="fullscreen-modal-image" id="fullscreen-modal-img">
+                <img src="assets/menu-page-1.jpg" alt="Carta página completa" class="fullscreen-modal-image" id="fullscreen-modal-img">
             </div>
  
             <button type="button" class="modal-nav-arrow right" id="modal-next-btn" aria-label="Siguiente página"><i data-lucide="chevron-right"></i></button>
@@ -439,8 +463,9 @@
     </div>
 
     <!-- Script tags shared + local -->
-    <script src="menu-data.js"></script>
-    <script src="cart.js"></script>
-    <script src="index.js"></script>
+    <script src="js/page-effects.js"></script>
+    <script src="js/menu-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

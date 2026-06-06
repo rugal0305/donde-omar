@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Donde Omar Parrillas - Menú Digital Interactivo</title>
+    <meta name="description" content="Navega por nuestra carta interactiva, chatea con el chef virtual y realiza tu pedido directo a nuestro WhatsApp.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-theme');
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.remove('light-theme');
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,950;1,600&family=Fredoka+One&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/carta.css">
+    <link rel="stylesheet" href="css/transitions.css">
+</head>
+<body class="min-h-screen relative flex flex-col justify-between">
+
+    <!-- Background Decorative Blobs -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
+        <div class="bg-blob-red rounded-full absolute -top-12 -left-12 w-40 h-40"></div>
+        <div class="bg-blob-yellow rounded-full absolute top-1/4 -right-16 w-32 h-32"></div>
+        <div class="bg-blob-red rounded-full absolute bottom-1/3 -left-16 w-36 h-36"></div>
+        <div class="bg-blob-yellow rounded-full absolute -bottom-12 right-12 w-48 h-48"></div>
+        <div class="bg-blob-red rounded-full absolute top-10 right-1/4 w-12 h-12"></div>
+    </div>
+
+    <!-- GLOBAL HEADER & NAVIGATION -->
+    <header class="navbar-header">
+        <nav class="navbar section-shell">
+            <a href="index.html" class="navbar-logo" id="nav-logo-link">
+                <img src="assets/logo.png" alt="Donde Omar Parrillas" class="logo-img" style="max-height: 48px; border-radius: 8px;">
+            </a>
+
+            <!-- Desktop Menu Links -->
+            <div class="navbar-links">
+                <a href="carta.html" class="nav-link">Carta Digital</a>
+                <a href="index.html#carta-fisica" class="nav-link">Carta PDF</a>
+                <a href="index.html#beneficios" class="nav-link">Beneficios</a>
+                <a href="index.html#galeria" class="nav-link">Galería</a>
+                <a href="index.html#contacto" class="nav-link">Contacto</a>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="navbar-actions">
+                <a href="https://wa.me/573235073766" class="btn btn-secondary nav-wa-btn" target="_blank" rel="noreferrer">
+                    WhatsApp
+                </a>
+                <a href="index.html" class="btn btn-primary">
+                    Ir al Inicio
+                </a>
+                <!-- Theme Toggle Button -->
+                <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Cambiar tema">
+                    <i data-lucide="moon" id="theme-toggle-icon"></i>
+                </button>
+                <!-- Mobile Cart Toggle Button -->
+                <button type="button" onclick="toggleCartModal()" class="mobile-cart-toggle" id="open-cart-btn" aria-label="Ver Carrito">
+                    <i data-lucide="shopping-cart"></i>
+                    <span class="cart-badge-count" id="cart-nav-badge">0</span>
+                </button>
+                <!-- Hamburger Menu Toggle -->
+                <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle-btn" aria-label="Abrir menú de navegación">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div class="mobile-dropdown-menu" id="mobile-dropdown-menu">
+            <div class="mobile-nav-links">
+                <a href="carta.html" class="mobile-nav-link">Carta Digital</a>
+                <a href="index.html#carta-fisica" class="mobile-nav-link">Carta PDF</a>
+                <a href="index.html#beneficios" class="mobile-nav-link">Beneficios</a>
+                <a href="index.html#galeria" class="mobile-nav-link">Galería</a>
+                <a href="index.html#contacto" class="mobile-nav-link">Contacto</a>
+                <a href="index.html" class="btn btn-primary w-full">Ir al Inicio</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Digital Menu Sub-Header Bar (Scroll Navigation sticky-alike) -->
+    <header id="carta-subheader" class="z-[90] bg-white/90 dark:bg-zinc-950/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 py-3 px-4 shadow-md text-zinc-800 dark:text-zinc-200">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <!-- View Modes / Search Access -->
+            <div class="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto">
+                <!-- Tabs for View Style -->
+                <div class="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl flex border border-zinc-200 dark:border-zinc-800 w-full sm:w-auto">
+                    <button onclick="setViewMode('physical')" id="btn-view-physical" class="flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 bg-red-600 text-white shadow-md">
+                        <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Vista Libro (Fiel)
+                    </button>
+                    <button onclick="setViewMode('interactive')" id="btn-view-interactive" class="flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Modo Interactivo
+                    </button>
+                    <button onclick="setViewMode('ai')" id="btn-view-ai" class="flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+                        <i data-lucide="bot" class="w-3.5 h-3.5 text-red-600"></i> Asistente IA 🤖
+                    </button>
+                </div>
+
+                <!-- Live Search input -->
+                <div class="relative w-full sm:w-48">
+                    <input type="text" id="menu-search" oninput="handleSearch(this.value)" placeholder="Buscar plato..." class="w-full bg-zinc-100 dark:bg-zinc-900 text-xs text-zinc-800 dark:text-zinc-100 pl-8 pr-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all">
+                    <i data-lucide="search" class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute left-2.5 top-2.5"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Selector (Only visible in physical view mode) -->
+    <div id="physical-pagination" class="max-w-7xl mx-auto w-full px-4 pt-6 z-10 flex flex-wrap justify-between items-center gap-3">
+        <h2 id="page-title" class="text-xl md:text-3xl font-black text-zinc-800 dark:text-zinc-200 tracking-tight uppercase border-l-4 border-red-600 pl-3">
+            ASADOS AL CARBÓN Y PICADAS
+        </h2>
+        <div class="flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-900 p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+            <button onclick="changePage(1)" id="btn-page-1" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-yellow-400 text-black shadow-sm">
+                Pág 1/4
+            </button>
+            <button onclick="changePage(2)" id="btn-page-2" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100">
+                Pág 2/4
+            </button>
+            <button onclick="changePage(3)" id="btn-page-3" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100">
+                Pág 3/4
+            </button>
+            <button onclick="changePage(4)" id="btn-page-4" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100">
+                Pág 4/4
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CATALOG CONTAINER -->
+    <main class="max-w-7xl mx-auto w-full px-4 py-6 z-10 flex-grow">
+
+        <!-- Search Results Panel (Hidden by default) -->
+        <div id="search-results-container" class="hidden mb-10">
+            <div class="flex items-center justify-between border-b border-zinc-200 pb-2 mb-4">
+                <h3 class="text-lg font-bold text-red-600 flex items-center gap-2">
+                    <i data-lucide="search" class="w-5 h-5"></i> Resultados de Búsqueda
+                </h3>
+                <button onclick="clearSearch()" class="text-xs text-zinc-500 hover:text-red-500 flex items-center gap-1">
+                    Limpiar <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+            <div id="search-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic search items rendered here -->
+            </div>
+        </div>
+
+        <!-- VIEW MODE 1: PHYSICAL MENU PAGES REPLICAS (4 PAGES) -->
+        <div id="physical-view-wrapper" class="space-y-8">
+
+            <!-- PAGE 1: ASADOS AL CARBÓN, PICADAS Y MINI PICADAS -->
+            <div id="page-content-1" class="grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-300">
+                <!-- Column 1: Asados al Carbón (Yellow border style) -->
+                <div class="menu-card-yellow bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-yellow-400 text-black text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5 animate-pulse">
+                            Asados al Carbón
+                        </div>
+                        <div class="space-y-4" id="items-asados"></div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Picadas (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Picadas
+                        </div>
+                        <div class="space-y-4" id="items-picadas"></div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Mini Picadas (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Mini Picadas
+                        </div>
+                        <div class="space-y-4" id="items-mini-picadas"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 2: SALCHIPAPAS, SUIZOS Y DESGRANADOS/PATACONES -->
+            <div id="page-content-2" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-300">
+                <!-- Column 1: Línea de Salchipapas (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Salchipapas
+                        </div>
+                        <div class="space-y-4" id="items-salchipapas"></div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Suizos (Yellow border style) -->
+                <div class="menu-card-yellow bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-yellow-400 text-black text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Suizos
+                        </div>
+                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 italic mb-4 text-center">Formato de Precio: Francesa / Vapor</p>
+                        <div class="space-y-4" id="items-suizos"></div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Desgranados & Patacón con Todo (Red border style) -->
+                <div class="space-y-6">
+                    <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                        <div>
+                            <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-sm uppercase mb-5">
+                                Desgranados
+                            </div>
+                            <div class="space-y-4" id="items-desgranados"></div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                        <div>
+                            <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-sm uppercase mb-5">
+                                Patacón con Todo
+                            </div>
+                            <div class="space-y-4" id="items-patacones-con-todo"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: HAMBURGUESAS, PERROS Y BURRITOS -->
+            <div id="page-content-3" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-300">
+                <!-- Column 1: Hamburguesas (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Hamburguesas
+                        </div>
+                        <div class="space-y-4" id="items-hamburguesas"></div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Perros Calientes (Yellow border style) -->
+                <div class="menu-card-yellow bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-yellow-400 text-black text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Perros Calientes
+                        </div>
+                        <div class="space-y-4" id="items-perros"></div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Salvajadas & Especialidades -->
+                <div class="space-y-6">
+                    <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                        <div>
+                            <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-sm uppercase mb-5">
+                                Salvajadas
+                            </div>
+                            <div class="space-y-4" id="items-salvajadas"></div>
+                        </div>
+                    </div>
+
+                    <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                        <div>
+                            <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-sm uppercase mb-5">
+                                Especialidad (Burritos)
+                            </div>
+                            <div class="space-y-4" id="items-burritos"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 4: AREPAS, PIZZAS Y ADICIONALES -->
+            <div id="page-content-4" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-300">
+                <!-- Column 1: Arepas (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Arepas
+                        </div>
+                        <div class="space-y-4" id="items-arepas"></div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Pizzas (Yellow border style) -->
+                <div class="menu-card-yellow bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-yellow-400 text-black text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Pizzas
+                        </div>
+                        <div class="space-y-3 max-h-[600px] overflow-y-auto pr-2" id="items-pizzas"></div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Adicionales (Red border style) -->
+                <div class="menu-card-red bg-white dark:bg-zinc-950 p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                        <div class="bg-red-600 text-white text-center py-2.5 rounded-t-xl font-black tracking-widest text-lg uppercase mb-5">
+                            Adicionales
+                        </div>
+                        <div class="grid grid-cols-1 gap-y-3 mt-4" id="items-adicionales-list"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- VIEW MODE 2: MODERN INTERACTIVE LIST (Category pills navigation) -->
+        <div id="interactive-view-wrapper" class="hidden space-y-8">
+            <!-- Category navigation buttons -->
+            <div class="flex flex-wrap gap-2 justify-center py-2">
+                <button onclick="filterInteractiveCategory('all')" id="pill-all" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-yellow-400 text-black shadow-sm">Todas</button>
+                <button onclick="filterInteractiveCategory('Asados al Carbón')" id="pill-Asados" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-850">Asados</button>
+                <button onclick="filterInteractiveCategory('Picadas')" id="pill-Picadas" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-855">Picadas</button>
+                <button onclick="filterInteractiveCategory('Línea de Salchipapas')" id="pill-Linea" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-860">Salchipapas</button>
+                <button onclick="filterInteractiveCategory('Suizos')" id="pill-Suizos" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-865">Suizos</button>
+                <button onclick="filterInteractiveCategory('Desgranados')" id="pill-Desgranados" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-870">Desgranados</button>
+                <button onclick="filterInteractiveCategory('Hamburguesas')" id="pill-Hamburguesas" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-875">Hamburguesas</button>
+                <button onclick="filterInteractiveCategory('Perros Calientes')" id="pill-Perros" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-880">Perros</button>
+                <button onclick="filterInteractiveCategory('Salvajadas')" id="pill-Salvajadas" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-885">Salvajadas</button>
+                <button onclick="filterInteractiveCategory('Arepas')" id="pill-Arepas" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-890">Arepas</button>
+                <button onclick="filterInteractiveCategory('Pizzas')" id="pill-Pizzas" class="px-4 py-2 rounded-full text-xs font-bold transition-all bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-895">Pizzas</button>
+            </div>
+
+            <!-- Products grid -->
+            <div id="interactive-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Interactive grid elements render here dynamically -->
+            </div>
+        </div>
+
+        <!-- VIEW MODE 3: ASISTENTE VIRTUAL IA CON API DE CHATBOT -->
+        <div id="ai-view-wrapper" class="hidden max-w-2xl mx-auto space-y-6">
+            <div class="bg-white dark:bg-zinc-950 border border-red-200 dark:border-zinc-800 rounded-2xl p-6 shadow-md relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-red-600/5 rounded-full blur-2xl"></div>
+                
+                <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-900 pb-4 mb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-tr from-red-600 to-yellow-500 p-3 rounded-2xl text-white shadow-lg">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
+                                Asistente Virtual <span class="text-[9px] bg-red-600/10 text-red-600 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest">Donde Omar Parrillas</span>
+                            </h3>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">¡Tu asesor virtual al instante! Pregúntame sobre ingredientes, precios o recomendaciones de la casa.</p>
+                        </div>
+                    </div>
+                    <button onclick="clearChatHistory()" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-red-500 p-2 rounded-xl transition-all" title="Borrar Historial">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Chat History area -->
+                <div id="ai-chat-history" class="space-y-4 max-h-[350px] overflow-y-auto mb-6 p-4 bg-zinc-50/50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                    <!-- Loaded dynamically from localStorage/FAQ -->
+                </div>
+
+                <!-- Suggestions block -->
+                <div class="space-y-2 mb-6">
+                    <span class="text-[9px] text-zinc-500 dark:text-zinc-400 font-bold uppercase tracking-wider block">Sugerencias Rápidas:</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="sendQuickAiPrompt('Recomiéndame una súper picada para compartir en familia')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-55 dark:hover:bg-purple-950/20 border border-zinc-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-800 text-[10px] text-zinc-700 dark:text-zinc-300 hover:text-purple-75 dark:hover:text-purple-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
+                            🍢 Picada Familiar
+                        </button>
+                        <button onclick="sendQuickAiPrompt('¿Qué métodos de pago reciben en el local?')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-55 dark:hover:bg-purple-950/20 border border-zinc-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-800 text-[10px] text-zinc-700 dark:text-zinc-300 hover:text-purple-75 dark:hover:text-purple-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
+                            💳 Métodos de Pago
+                        </button>
+                        <button onclick="sendQuickAiPrompt('¿Qué lleva la Salvajada Especial y cuánto vale?')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-55 dark:hover:bg-purple-950/20 border border-zinc-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-800 text-[10px] text-zinc-700 dark:text-zinc-300 hover:text-purple-75 dark:hover:text-purple-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
+                            🍖 Salvajada Especial
+                        </button>
+                        <button onclick="sendQuickAiPrompt('Tengo antojo de pizza personal, ¿cuáles tienen?')" class="bg-zinc-100 dark:bg-zinc-900 hover:bg-purple-55 dark:hover:bg-purple-950/20 border border-zinc-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-800 text-[10px] text-zinc-700 dark:text-zinc-300 hover:text-purple-75 dark:hover:text-purple-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
+                            🍕 Pizzas Personales
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input group -->
+                <div class="flex gap-2">
+                    <input type="text" id="ai-chat-input" onkeydown="if(event.key === 'Enter') sendAiMessage()" placeholder="Charla con el cocinero... (ej. ¿Dónde quedan ubicados?)" class="flex-grow bg-zinc-100 dark:bg-zinc-900 text-xs text-zinc-800 dark:text-zinc-100 px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
+                    <button onclick="sendAiMessage()" id="btn-send-ai" class="bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold px-4 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-md">
+                        <span class="text-xs">Preguntar</span>
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MAIN FOOTER -->
+    <footer class="main-footer">
+        <div class="section-shell footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-wrapper" style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <img src="assets/logo.png" alt="Donde Omar Parrillas" class="footer-logo-img" style="max-height: 48px; border-radius: 8px;">
+                    <h2 class="footer-title" style="color: var(--color-secondary); margin: 0; font-size: 22px;">DONDE OMAR PARRILLAS</h2>
+                </div>
+                <p class="footer-slogan">Asados al Carbón y Comidas Rápidas. El verdadero sabor parrillero de tu barrio.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3 class="footer-heading">Secciones</h3>
+                <div class="footer-links-list">
+                    <a href="carta.html">Carta Digital</a>
+                    <a href="index.html#carta-fisica">Carta PDF</a>
+                    <a href="index.html#beneficios">Beneficios</a>
+                    <a href="index.html#galeria">Galería</a>
+                    <a href="index.html#contacto">Contacto</a>
+                </div>
+            </div>
+
+            <div class="footer-hours">
+                <h3 class="footer-heading">Horario</h3>
+                <p class="footer-hours-text" style="font-size: 14px; margin-bottom: 12px; color: rgba(255, 255, 255, 0.85);">
+                    Todos los días: 4:00 p.m. - 12:00 a.m.
+                </p>
+                <!-- Shop status widget -->
+                <div id="shop-status-widget" class="shop-status-widget">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Calculando...</span>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <h3 class="footer-heading">Síguenos</h3>
+                <div class="social-circle-container" id="social-badges-container">
+                    <!-- Injected dynamically by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-shell footer-copyright">
+            <p>Copyright &copy; <span id="footer-year">2026</span> DONDE OMAR PARRILLAS. Todos los derechos reservados.</p>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <button type="button" class="scroll-to-top-btn" id="scroll-to-top-btn" aria-label="Volver arriba">
+            <i data-lucide="arrow-up"></i>
+        </button>
+    </footer>
+
+    <!-- PRE-ORDER DRAWER MODAL (CART DETAILS SLIDE-OUT) -->
+    <div id="cart-modal" class="fixed inset-0 z-[2000] bg-black/50 backdrop-blur-sm flex justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white dark:bg-zinc-950 w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-zinc-200 dark:border-zinc-800 translate-x-full transition-transform duration-300" id="cart-sidebar">
+            
+            <!-- Modal Header -->
+            <div class="p-4 border-b border-zinc-100 dark:border-zinc-900 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="text-yellow-600"></i>
+                    <h3 class="font-black text-zinc-800 dark:text-zinc-200 text-lg uppercase tracking-wider">Tu Pre-Pedido</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="text-zinc-500 hover:text-red-500 p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Cart list items wrapper -->
+            <div class="p-4 overflow-y-auto flex-grow space-y-4" id="cart-items-container">
+                <!-- If cart empty state -->
+                <div id="cart-empty-state" class="text-center py-12 text-zinc-400 dark:text-zinc-500">
+                    <i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-3 opacity-30"></i>
+                    <p class="text-sm">¿Tienes hambre? ¡Agrega platillos de la carta!</p>
+                </div>
+            </div>
+
+            <!-- Cart modal footer (Total and checkout) -->
+            <div class="p-4 border-t border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-900/50 space-y-4">
+                <div class="flex justify-between items-center text-zinc-700 dark:text-zinc-300">
+                    <span class="text-sm font-semibold">Subtotal</span>
+                    <span class="text-lg font-black text-red-600" id="cart-total-value">$0</span>
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-[10px] text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">Nombre / Dirección / Observaciones</label>
+                    <textarea id="cart-customer-notes" placeholder="Ej: Carlos Ramos - Calle 80 #10-15 (Sin cebolla, papas bien tostadas...)" class="w-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-red-500 h-16 resize-none"></textarea>
+                </div>
+
+                <button onclick="sendOrderWhatsApp()" class="w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md">
+                    <i data-lucide="send" class="w-4 h-4"></i> Enviar Pedido a WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ITEM DETAIL MODAL (With Adiciones modifiers) -->
+    <div id="item-modal" class="fixed inset-0 z-[2000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200 opacity-0 pointer-events-none">
+        <div class="bg-white dark:bg-zinc-950 w-full max-w-lg rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-2xl transform scale-95 transition-transform duration-200" id="item-modal-container">
+            
+            <!-- Header -->
+            <div class="p-4 border-b border-zinc-150 dark:border-zinc-900 flex justify-between items-start">
+                <div>
+                    <span id="detail-category" class="text-[9px] bg-red-600/10 text-red-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">Categoría</span>
+                    <h3 id="detail-title" class="font-black text-zinc-800 dark:text-zinc-100 text-lg uppercase tracking-wider mt-1">Nombre del Platillo</h3>
+                </div>
+                <button onclick="closeItemModal()" class="text-zinc-400 hover:text-red-500 p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Body contents -->
+            <div class="p-5 max-h-[60vh] overflow-y-auto space-y-4">
+                <p id="detail-desc" class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed italic">Descripción de ingredientes...</p>
+                
+                <!-- Price displays -->
+                <div id="detail-single-price-wrapper" class="flex justify-between items-center py-2 border-b border-zinc-150 dark:border-zinc-800">
+                    <span class="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Precio Unitario:</span>
+                    <span id="detail-price" class="text-2xl font-black text-red-600">$0</span>
+                </div>
+
+                <!-- Add Ons Section (Adiciones Checklist) -->
+                <div>
+                    <h4 class="text-xs font-black text-zinc-700 dark:text-zinc-300 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-red-500"></i> ¿Deseas agregar Adicionales?
+                    </h4>
+                    <div class="grid grid-cols-2 gap-2" id="detail-adiciones-list">
+                        <!-- Rendered checkbox inputs dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer selectors -->
+            <div class="p-4 border-t border-zinc-150 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-900/50 flex items-center justify-between gap-4">
+                <!-- Quantity controls -->
+                <div class="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-1">
+                    <button onclick="changeQty(-1)" class="w-8 h-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center font-bold hover:bg-zinc-300 dark:hover:bg-zinc-700">-</button>
+                    <span id="detail-qty" class="text-sm font-bold w-6 text-center text-zinc-800 dark:text-zinc-100">1</span>
+                    <button onclick="changeQty(1)" class="w-8 h-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 flex items-center justify-center font-bold hover:bg-zinc-300 dark:hover:bg-zinc-700">+</button>
+                </div>
+
+                <!-- Action Button -->
+                <button onclick="addItemToCart()" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black font-extrabold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all">
+                    Agregar al Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEEDBACK TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-yellow-400 text-black font-bold py-2.5 px-6 rounded-full shadow-2xl text-xs z-[2100] flex items-center gap-2 opacity-0 scale-90 pointer-events-none transition-all duration-300">
+        <i data-lucide="check-circle" class="w-4 h-4"></i> <span id="toast-msg">¡Agregado exitosamente!</span>
+    </div>
+
+    <!-- Scripts shared and local -->
+    <script src="js/page-effects.js"></script>
+    <script src="js/menu-data.js"></script>
+    <script src="js/faq-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/carta.js"></script>
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

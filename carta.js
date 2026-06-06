@@ -231,7 +231,10 @@ function renderCatalog() {
                     ${item.icon}
                 </div>
                 <div class="food-row-content">
-                    <h4 class="food-row-title">${item.name}</h4>
+                    <div class="food-row-title-row">
+                        <h4 class="food-row-title">${item.name}</h4>
+                        ${item.cleanDesc ? `<button type="button" class="food-info-btn" onclick="openProductInfo('${item.id}')" aria-label="Ver descripción completa de ${item.name}" title="Ver ingredientes completos">!</button>` : ''}
+                    </div>
                     <p class="food-row-desc">${item.cleanDesc}</p>
                     <div class="food-row-actions-bar">
                         <span class="food-row-price">${item.price}</span>
@@ -612,3 +615,64 @@ function handleScrollSpy() {
         });
     }
 }
+
+// =========================================================================
+// MODAL DE INFORMACIÓN DE PRODUCTO (Descripción Completa)
+// =========================================================================
+
+(function initProductInfoModal() {
+    const overlay   = document.getElementById("product-info-overlay");
+    const titleEl   = document.getElementById("product-info-title");
+    const iconEl    = document.getElementById("product-info-icon");
+    const descEl    = document.getElementById("product-info-desc");
+    const closeBtn  = document.getElementById("product-info-close-btn");
+    const closeBtn2 = document.getElementById("product-info-close-btn-footer");
+
+    if (!overlay) return;
+
+    function openModal() {
+        overlay.setAttribute("aria-hidden", "false");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        overlay.setAttribute("aria-hidden", "true");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    // Close on backdrop click
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal();
+    });
+
+    // Close buttons
+    if (closeBtn)  closeBtn.addEventListener("click",  closeModal);
+    if (closeBtn2) closeBtn2.addEventListener("click", closeModal);
+
+    // ESC key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && overlay.classList.contains("active")) {
+            closeModal();
+        }
+    });
+
+    // Global function called by the "!" buttons in each card
+    window.openProductInfo = (itemId) => {
+        const allItems = window.MENU_ITEMS || [];
+        const item = allItems.find(i => i.id === itemId);
+        if (!item) return;
+
+        // Strip the category prefix e.g. "[HAMBURGUESAS] " from description
+        let desc = item.description || "";
+        desc = desc.replace(/^\[[^\]]+\]\s*/, "");
+
+        iconEl.textContent  = item.icon || "🍽️";
+        titleEl.textContent = item.name;
+        descEl.textContent  = desc;
+
+        openModal();
+    };
+})();
+

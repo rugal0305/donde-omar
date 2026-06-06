@@ -25,6 +25,7 @@ const DOM = {
     modal: document.getElementById("fullscreen-menu-modal"),
     modalImg: document.getElementById("fullscreen-modal-img"),
     modalCloseBtn: document.getElementById("close-fullscreen-btn"),
+    modalRotateBtn: document.getElementById("rotate-fullscreen-btn"),
     modalPrevBtn: document.getElementById("modal-prev-btn"),
     modalNextBtn: document.getElementById("modal-next-btn"),
     modalFooterPrevBtn: document.getElementById("modal-footer-prev-btn"),
@@ -137,6 +138,54 @@ function closeFullscreenModal() {
     DOM.modal.classList.remove("active");
     DOM.modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = ""; // Restaurar scroll del fondo
+    
+    // Restaurar modo horizontal si estaba activo al cerrar
+    if (isModalLandscape) {
+        toggleModalLandscape();
+    }
+}
+
+let isModalLandscape = false;
+
+function toggleModalLandscape() {
+    isModalLandscape = !isModalLandscape;
+    const rotateBtn = DOM.modalRotateBtn;
+    
+    if (isModalLandscape) {
+        // Intentar Screen Orientation API
+        if (screen.orientation && screen.orientation.lock) {
+            DOM.modal.requestFullscreen().then(() => {
+                screen.orientation.lock('landscape').catch(err => {
+                    console.log("No se pudo bloquear la orientación:", err);
+                });
+            }).catch(err => {
+                console.log("No se pudo iniciar pantalla completa para orientación:", err);
+            });
+        }
+        
+        DOM.modal.classList.add("mobile-landscape-menu");
+        if (rotateBtn) {
+            rotateBtn.innerHTML = `<i data-lucide="rotate-ccw" class="icon-inline"></i> <span>Girar Vertical</span>`;
+            if (window.lucide) window.lucide.createIcons();
+        }
+    } else {
+        if (screen.orientation && screen.orientation.unlock) {
+            try {
+                screen.orientation.unlock();
+            } catch(e) {}
+        }
+        if (document.fullscreenElement) {
+            try {
+                document.exitFullscreen();
+            } catch(e) {}
+        }
+        
+        DOM.modal.classList.remove("mobile-landscape-menu");
+        if (rotateBtn) {
+            rotateBtn.innerHTML = `<i data-lucide="rotate-cw" class="icon-inline"></i> <span>Girar Carta</span>`;
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
 }
 
 // Procesa el formulario de contacto general para abrir un canal de chat directo
@@ -181,6 +230,9 @@ function setupEventListeners() {
     DOM.openFullscreenBtn.addEventListener("click", openFullscreenModal);
     
     DOM.modalCloseBtn.addEventListener("click", closeFullscreenModal);
+    if (DOM.modalRotateBtn) {
+        DOM.modalRotateBtn.addEventListener("click", toggleModalLandscape);
+    }
     DOM.modalPrevBtn.addEventListener("click", handleViewerPrev);
     DOM.modalNextBtn.addEventListener("click", handleViewerNext);
     DOM.modalFooterPrevBtn.addEventListener("click", handleViewerPrev);

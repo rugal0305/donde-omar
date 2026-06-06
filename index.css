@@ -1196,12 +1196,44 @@ h1, h2, h3, h4, h5, h6, .font-display {
     aspect-ratio: 1 / 1.414; /* Standard document ratio */
 }
 
-.menu-viewer-image {
+/* DRAG-TO-SCROLL CONTAINER */
+.menu-drag-scroll {
     width: 100%;
     height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE/Edge */
+    /* Smooth touch scroll on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent vertical scroll leak */
+    overscroll-behavior-x: contain;
+}
+
+.menu-drag-scroll::-webkit-scrollbar {
+    display: none;                  /* Chrome/Safari */
+}
+
+.menu-drag-scroll.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.menu-viewer-image {
+    /* Make image wider than the container so it can be scrolled horizontally */
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    max-width: none; /* override any inherited max-width */
     object-fit: cover;
     display: block;
     transition: opacity 0.3s ease-in-out;
+    /* Ensure the image is not draggable by the browser's native image drag */
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none; /* prevent browser native drag; JS handles it */
 }
 
 .menu-viewer-controls {

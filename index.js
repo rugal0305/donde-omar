@@ -55,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Inicializar animaciones de scroll
     initScrollReveal();
+
+    // 4. Inicializar desplazamiento horizontal drag en el visor de carta
+    initMenuDragScroll();
 });
 
 // Carga las variables de CONFIG a los elementos correspondientes del DOM
@@ -282,4 +285,68 @@ function initScrollReveal() {
         }
         observer.observe(el);
     });
+}
+
+// =========================================================================
+// DESPLAZAMIENTO HORIZONTAL DRAG EN EL VISOR DE CARTA FÍSICA
+// =========================================================================
+function initMenuDragScroll() {
+    const scroller = document.getElementById("menu-drag-scroll");
+    if (!scroller) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let scrollStartX = 0;
+    let dragMoved = false;
+
+    // --- MOUSE EVENTS (desktop) ---
+    scroller.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        dragMoved = false;
+        startX = e.clientX;
+        scrollStartX = scroller.scrollLeft;
+        scroller.classList.add("is-dragging");
+        // Prevent text selection while dragging
+        e.preventDefault();
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) dragMoved = true;
+        scroller.scrollLeft = scrollStartX - dx;
+    });
+
+    document.addEventListener("mouseup", () => {
+        if (!isDragging) return;
+        isDragging = false;
+        scroller.classList.remove("is-dragging");
+    });
+
+    // Prevent click from firing if user dragged
+    scroller.addEventListener("click", (e) => {
+        if (dragMoved) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+
+    // --- TOUCH EVENTS (mobile) ---
+    let touchStartX = 0;
+    let touchScrollStartX = 0;
+
+    scroller.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchScrollStartX = scroller.scrollLeft;
+    }, { passive: true });
+
+    scroller.addEventListener("touchmove", (e) => {
+        const dx = e.touches[0].clientX - touchStartX;
+        scroller.scrollLeft = touchScrollStartX - dx;
+        // Only prevent default if horizontal movement dominates
+        const dy = e.touches[0].clientY - (e.touches[0].screenY - e.touches[0].clientY);
+        if (Math.abs(dx) > Math.abs(dy || 0)) {
+            // Allow browser to handle, overscroll-behavior handles containment
+        }
+    }, { passive: true });
 }

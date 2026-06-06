@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OH DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas</title>
+    <meta name="description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp. ¡Sabor auténtico preparado al momento!">
+    <meta name="keywords" content="comida rapida, asados al carbon, omar parrilla, perros calientes, picadas, degranados, asados, pizzas, domicilio">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OH DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas">
+    <meta property="og:description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=84">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OH DONDE OMAR PARRILLA | Asados al Carbón y Comidas Rápidas">
+    <meta name="twitter:description" content="Disfruta de la mejor carta de asados, picadas, perros calientes y pizzas. Pide a domicilio por WhatsApp.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=84">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,950;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="antialiased">
+
+    <!-- HEADER / NAVIGATION (Mismo navbar en todo el sitio) -->
+    <header class="navbar-header">
+        <nav class="navbar section-shell">
+            <a href="#inicio" class="navbar-logo" id="nav-logo-link">
+                <img src="logo.png" alt="OH Donde Omar Parrilla" class="logo-img">
+            </a>
+
+            <!-- Desktop Menu Links -->
+            <div class="navbar-links">
+                <a href="carta.html" class="nav-link">Carta Digital</a>
+                <a href="#carta-fisica" class="nav-link">Carta PDF</a>
+                <a href="#beneficios" class="nav-link">Beneficios</a>
+                <a href="#galeria" class="nav-link">Galería</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="navbar-actions">
+                <a href="https://wa.me/573105556677" class="btn btn-secondary nav-wa-btn" target="_blank" rel="noreferrer">
+                    WhatsApp
+                </a>
+                <a href="carta.html" class="btn btn-primary">
+                    Pedir Online
+                </a>
+                <!-- Mobile Cart Toggle Button (Redirige a la carta si no está en ella) -->
+                <a href="carta.html" class="mobile-cart-toggle" id="open-cart-btn" aria-label="Ver Carrito">
+                    <i data-lucide="shopping-cart"></i>
+                    <span class="cart-badge-count" id="cart-nav-badge">0</span>
+                </a>
+                <!-- Hamburger Menu Toggle -->
+                <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle-btn" aria-label="Abrir menú de navegación">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div class="mobile-dropdown-menu" id="mobile-dropdown-menu">
+            <div class="mobile-nav-links">
+                <a href="carta.html" class="mobile-nav-link">Carta Digital</a>
+                <a href="#carta-fisica" class="mobile-nav-link">Carta PDF</a>
+                <a href="#beneficios" class="mobile-nav-link">Beneficios</a>
+                <a href="#galeria" class="mobile-nav-link">Galería</a>
+                <a href="#contacto" class="mobile-nav-link">Contacto</a>
+                <a href="carta.html" class="btn btn-primary w-full">Pedir Online</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- HERO SECTION -->
+        <section id="inicio" class="hero-section">
+            <div class="hero-bg">
+                <div class="hero-overlay"></div>
+                <div class="hero-grid-pattern"></div>
+            </div>
+            
+            <div class="section-shell hero-container">
+                <div class="hero-content scroll-reveal">
+                    <p class="hero-badge">
+                        <span class="badge-dot"></span>
+                        Auténtico Sabor al Carbón de Barrio
+                    </p>
+                    <h1 class="hero-title">
+                        OH DONDE OMAR <span class="highlight">PARRILLA</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Los mejores asados al carbón, picadas, hamburguesas, suizos y perros calientes. ¡Directo de la parrilla a tu mesa!
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="carta.html" class="btn btn-primary hero-btn-large">Ver Carta Digital</a>
+                        <a href="#carta-fisica" class="btn btn-outline hero-btn-large">Carta PDF Original</a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <p class="stat-value">+20</p>
+                            <p class="stat-label">años de sabor</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-value">100%</p>
+                            <p class="stat-label">grill al carbón</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-value">4.9/5</p>
+                            <p class="stat-label">sabor de barrio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA MENU SECTOR (Reemplazo del menú interactivo gigante) -->
+        <section id="carta-cta" class="menu-cta-section">
+            <div class="decorative-glow"></div>
+            
+            <div class="section-shell menu-cta-container">
+                <div class="menu-cta-content scroll-reveal">
+                    <p class="section-tag">🔥 NUESTRA CARTA DIGITAL</p>
+                    <h2 class="section-title">Arma tu Pedido en Línea</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle">
+                        Explora nuestro catálogo interactivo con más de 90 deliciosas opciones listas para preparar al carbón. Agrega perros, hamburguesas, asados o pizzas a tu carrito y envíanos tu orden directo a nuestro WhatsApp. 
+                    </p>
+                    
+                    <div class="cta-features-grid">
+                        <div class="cta-feature-item">
+                            <i data-lucide="shopping-bag" class="feature-icon-lucide"></i>
+                            <h4>Carrito Interactivo</h4>
+                            <p>Suma tus platos favoritos y controla los precios en tiempo real.</p>
+                        </div>
+                        <div class="cta-feature-item">
+                            <i data-lucide="truck" class="feature-icon-lucide"></i>
+                            <h4>Despacho Veloz</h4>
+                            <p>Envíanos tu ubicación exacta y te lo llevamos calientito.</p>
+                        </div>
+                        <div class="cta-feature-item">
+                            <i data-lucide="message-square" class="feature-icon-lucide"></i>
+                            <h4>Pedido WhatsApp</h4>
+                            <p>Sin intermediarios, atención directa y personalizada por chat.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-action-wrapper">
+                        <a href="carta.html" class="btn btn-primary btn-cta-large">
+                            Ir a la Carta & Hacer Pedido ➔
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="menu-cta-visual scroll-reveal">
+                    <div class="visual-card">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Platos al carbón" class="visual-img">
+                        <div class="visual-badge-floating">
+                            <span class="pulse-ring"></span>
+                            🔥 +90 Platos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARTA FÍSICA / PDF IMAGE VIEW SECTION -->
+        <section id="carta-fisica" class="physical-menu-section">
+            <div class="section-shell">
+                <!-- Section Header -->
+                <div class="section-header scroll-reveal">
+                    <p class="section-tag">📄 MENÚ ORIGINAL</p>
+                    <h2 class="section-title">Nuestra Carta Física</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle">
+                        Mira el diseño original de nuestro menú. Puedes hojearlo directamente aquí o descargarlo completo en formato PDF de alta calidad.
+                    </p>
+                </div>
+
+                <!-- Viewer Container -->
+                <div class="menu-viewer-container scroll-reveal">
+                    <div class="menu-viewer-frame">
+                        <img src="menu-page-1.jpg" alt="Carta página 1" class="menu-viewer-image" id="physical-menu-img">
+                    </div>
+                    
+                    <div class="menu-viewer-controls">
+                        <button type="button" class="btn btn-outline" id="viewer-prev-btn"><i data-lucide="chevron-left" class="icon-inline"></i> Anterior</button>
+                        <span class="viewer-page-indicator" id="viewer-page-indicator">Página 1 de 2</span>
+                        <button type="button" class="btn btn-outline" id="viewer-next-btn">Siguiente <i data-lucide="chevron-right" class="icon-inline"></i></button>
+                    </div>
+                    
+                    <div class="menu-viewer-actions">
+                        <button type="button" class="btn btn-primary" id="open-fullscreen-btn">
+                            <i data-lucide="maximize-2" class="icon-inline"></i> Ver Carta Completa
+                        </button>
+                        <a href="menu.pdf" class="btn btn-outline" download="MENU_OH_DONDE_OMAR_PARRILLA.pdf">
+                            <i data-lucide="download" class="icon-inline"></i> Descargar Menú PDF (4.2 MB)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENEFITS SECTION -->
+        <section id="beneficios" class="benefits-section">
+            <div class="section-shell benefits-grid">
+                <div class="benefits-header scroll-reveal">
+                    <p class="section-tag">¿Por qué elegirnos?</p>
+                    <h2 class="section-title">El secreto está en el fuego y el carbón</h2>
+                    <p class="section-subtitle">
+                        Descubre por qué somos la esquina favorita de los amantes de las picadas y asados. Sabor auténtico preparado al momento con los mejores ingredientes.
+                    </p>
+                </div>
+
+                <div class="benefits-cards scroll-reveal">
+                    <article class="benefit-card">
+                        <p class="benefit-metric">Auténtico</p>
+                        <h3 class="benefit-title">Asado al Carbón</h3>
+                        <p class="benefit-desc">El humo y calor de leña real le dan ese toque único a nuestras carnes y hamburguesas.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <p class="benefit-metric">Express</p>
+                        <h3 class="benefit-title">Rapidez Expreso</h3>
+                        <p class="benefit-desc">Despachamos tu pedido en minutos para que lo disfrutes caliente y crujiente.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <p class="benefit-metric">Fresco</p>
+                        <h3 class="benefit-title">Ingredientes Frescos</h3>
+                        <p class="benefit-desc">Verduras, pan artesanal y carnes molidas a diario para una frescura insuperable.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <p class="benefit-metric">Secreto</p>
+                        <h3 class="benefit-title">Recetas de Familia</h3>
+                        <p class="benefit-desc">Salsas secretas y sazones tradicionales guardados celosamente por Donde Omar.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY SECTION -->
+        <section id="galeria" class="gallery-section">
+            <div class="section-shell">
+                <div class="gallery-header scroll-reveal">
+                    <div class="gallery-title-wrapper">
+                        <p class="section-tag">Galería</p>
+                        <h2 class="section-title">Visuales de Nuestra Cocina</h2>
+                    </div>
+                    <p class="gallery-subtitle-text">
+                        En Donde Omar trabajamos con pasión para llevar el sabor más crocante, jugoso y humeante de la parrilla a tu mesa.
+                    </p>
+                </div>
+
+                <div class="gallery-grid scroll-reveal">
+                    <figure class="gallery-item item-large">
+                        <div class="gallery-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=84" alt="Nuestra Parrilla" loading="lazy">
+                        </div>
+                        <figcaption class="gallery-caption">
+                            <h3>Nuestra Parrilla</h3>
+                            <p>Fuego, brasas y el mejor aroma al carbón.</p>
+                        </figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <div class="gallery-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=84" alt="Hamburguesa Especial" loading="lazy">
+                        </div>
+                        <figcaption class="gallery-caption">
+                            <h3>Hamburguesas Especiales</h3>
+                            <p>Preparadas al momento con ingredientes premium.</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contacto" class="contact-section">
+            <div class="section-shell contact-grid">
+                <div class="contact-info scroll-reveal">
+                    <p class="section-tag">Contacto</p>
+                    <h2 class="section-title">Realiza tus Pedidos por Chat</h2>
+                    <p class="section-subtitle">
+                        Escríbenos directamente para domicilios o reservas. Estaremos listos para responderte de inmediato y alistar tu pedido.
+                    </p>
+                    
+                    <div class="business-hours-card">
+                        <h4><i data-lucide="clock" class="icon-inline"></i> Horarios de Atención</h4>
+                        <p id="business-hours-text">Todos los días, 4:00 p.m. - 12:00 a.m.</p>
+                    </div>
+
+                    <!-- Map Frame -->
+                    <div class="map-container">
+                        <iframe
+                          src="https://maps.google.com/maps?q=Av.%20Principal%20%2345-12,%20Bogota&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                          width="100%"
+                          height="280"
+                          style="border: 0;"
+                          allowfullscreen=""
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                          title="Ubicación Donde Omar"
+                          class="google-map"
+                        ></iframe>
+                    </div>
+
+                    <div class="contact-direct-actions">
+                        <a href="https://wa.me/573105556677" class="btn btn-primary nav-wa-btn" target="_blank" rel="noreferrer">
+                            WhatsApp Principal
+                        </a>
+                        <a href="tel:+573105556677" class="btn btn-outline" id="call-direct-btn">
+                            <i data-lucide="phone" class="icon-inline"></i> Llamar al Negocio
+                        </a>
+                    </div>
+                </div>
+
+                <!-- General Contact Form -->
+                <div class="contact-form-container scroll-reveal">
+                    <form class="glass-form" id="general-contact-form">
+                        <h3 class="form-title">Escríbenos</h3>
+                        <div class="form-fields-wrapper">
+                            <label class="form-label" for="contact-name">
+                                <span>Tu nombre completo <span class="required-star">*</span></span>
+                                <input type="text" id="contact-name" name="name" placeholder="Ej. Andrés Felipe Ramos" required>
+                            </label>
+                            
+                            <label class="form-label" for="contact-phone">
+                                <span>Número celular (WhatsApp) <span class="required-star">*</span></span>
+                                <input type="tel" id="contact-phone" name="phone" placeholder="Ej. 310 555 6677" required>
+                            </label>
+                            
+                            <label class="form-label" for="contact-message">
+                                <span>Escribe tu pedido detallado <span class="required-star">*</span></span>
+                                <textarea id="contact-message" name="message" rows="4" placeholder="Ej. Hola, deseo pedir una Picada Dúo y un Perro Especial. Mi dirección es Calle 45 #12-30" required></textarea>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full form-submit-btn">
+                            Enviar Mensaje por WhatsApp
+                        </button>
+                        <p class="form-disclaimer">
+                            * Al enviar, se abrirá WhatsApp con el mensaje estructurado de tu pedido.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="section-shell footer-grid">
+            <div class="footer-brand">
+                <h2 class="footer-title">OH DONDE OMAR PARRILLA</h2>
+                <p class="footer-slogan">Asados al Carbón y Comidas Rápidas.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3 class="footer-heading">Secciones</h3>
+                <div class="footer-links-list">
+                    <a href="carta.html">Carta Digital</a>
+                    <a href="#carta-fisica">Carta PDF</a>
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#galeria">Galería</a>
+                    <a href="#contacto">Contacto</a>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <h3 class="footer-heading">Síguenos</h3>
+                <div class="social-badges-container" id="social-badges-container">
+                    <!-- Injected by JavaScript based on config -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-shell footer-copyright">
+            <p>Copyright <span id="footer-year">2026</span> OH DONDE OMAR PARRILLA. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/573105556677" class="floating-wa-btn nav-wa-btn" aria-label="WhatsApp" target="_blank" rel="noreferrer">
+        <!-- WhatsApp SVG Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+          <path d="M13.601 2.326A7.85 7.85 0 0 0 8 0a7.86 7.86 0 0 0-7.663 6.176c-.052.244-.08.494-.08.746c0 1.229.28 2.425.815 3.518l-1.047 3.82 3.923-1.03a7.78 7.78 0 0 0 3.79.972h.004a7.86 7.86 0 0 0 7.664-7.66c0-2.093-.812-4.062-2.288-5.539zM7.997 13.93c-1.156 0-2.29-.313-3.284-.907l-.236-.14-2.434.639.65-2.372-.154-.246a6.51 6.51 0 0 1-1.002-3.486c0-3.59 2.926-6.513 6.513-6.513a6.51 6.51 0 0 1 4.606 1.907 6.5 6.5 0 0 1 1.9 4.606c0 3.59-2.926 6.51-6.513 6.51m3.42-3.175c-.187-.093-1.11-.548-1.28-.612-.17-.065-.294-.097-.417.087-.123.185-.478.613-.585.736-.107.124-.215.138-.403.045-.188-.093-.79-.29-1.502-.932-.554-.494-.928-1.104-1.037-1.293-.11-.189-.012-.291.082-.384.084-.083.187-.218.28-.328.093-.11.124-.188.188-.312.062-.124.03-.233-.015-.325-.047-.093-.417-1.01-.572-1.38-.15-.365-.303-.31-.418-.31-.11-.005-.236-.005-.363-.005a.72.72 0 0 0-.522.243c-.18.2-.687.67-.687 1.637s.704 1.905.802 2.037c.098.132 1.386 2.115 3.358 2.964.469.202.836.323 1.122.415.47.15.897.129 1.235.078.377-.058 1.11-.454 1.267-.893.158-.44.158-.817.11-.893-.047-.076-.17-.123-.357-.216"/>
+        </svg>
+    </a>
+
+    <!-- FLOATING CART BUTTON (Redirige a la carta si tiene items) -->
+    <a href="carta.html" class="floating-cart-trigger" id="floating-cart-trigger" aria-label="Ver carrito">
+        <span class="pulse-ring"></span>
+        <i data-lucide="shopping-cart"></i>
+        <span class="cart-badge-count floating-badge" id="cart-floating-badge">0</span>
+    </a>
+
+    <!-- FULLSCREEN PHYSICAL MENU MODAL -->
+    <div class="fullscreen-menu-modal" id="fullscreen-menu-modal" aria-hidden="true" role="dialog">
+        <header class="fullscreen-modal-header">
+            <button type="button" class="btn btn-primary close-modal-btn" id="close-fullscreen-btn"><i data-lucide="x" class="icon-inline"></i> Cerrar Carta</button>
+        </header>
+ 
+        <div class="fullscreen-modal-body">
+            <!-- Modal navigation arrows -->
+            <button type="button" class="modal-nav-arrow left" id="modal-prev-btn" aria-label="Página anterior"><i data-lucide="chevron-left"></i></button>
+            
+            <div class="fullscreen-modal-image-container">
+                <img src="menu-page-1.jpg" alt="Carta página completa" class="fullscreen-modal-image" id="fullscreen-modal-img">
+            </div>
+ 
+            <button type="button" class="modal-nav-arrow right" id="modal-next-btn" aria-label="Siguiente página"><i data-lucide="chevron-right"></i></button>
+        </div>
+ 
+        <footer class="fullscreen-modal-footer">
+            <button type="button" class="btn btn-outline" id="modal-footer-prev-btn"><i data-lucide="chevron-left" class="icon-inline"></i> Anterior</button>
+            <span class="modal-page-indicator" id="modal-page-indicator">Página 1 de 2</span>
+            <button type="button" class="btn btn-outline" id="modal-footer-next-btn">Siguiente <i data-lucide="chevron-right" class="icon-inline"></i></button>
+        </footer>
+    </div>
+
+    <!-- Script tags shared + local -->
+    <script src="menu-data.js"></script>
+    <script src="cart.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
